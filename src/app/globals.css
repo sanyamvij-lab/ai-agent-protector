@@ -1,0 +1,232 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    /* Master Dark Analytics Palette (Reference Exact) */
+    --bg-main: #07080D;
+    --bg-sidebar: #0B0D15;
+    --bg-card: #10121E;
+    --bg-elevated: #15182A;
+    --accent-primary: #8B5CF6;
+    --accent-secondary: #A78BFA;
+    --accent-highlight: #6366F1;
+    --text-main: #F5F5FA;
+    --text-secondary: #9295AA;
+    --border-purple: rgba(167, 139, 250, 0.18);
+
+    /* Graphite Core Palette */
+    --bg-canvas: #0E1013;
+    --bg-surface: #14171D;
+    --bg-surface-elevated: #1A1E26;
+    --bg-surface-inset: #101318;
+
+    /* Warm Ivory & Slate Typography */
+    --text-primary: #FBF9F5;
+    --text-secondary: #D2D6DC;
+    --text-muted: #8E9AA8;
+    --text-subtle: #687687;
+
+    /* Muted Champagne & Restrained Slate Accents */
+    --champagne-primary: #D4AF37;
+    --champagne-hover: #DFBF68;
+    --champagne-subtle: rgba(212, 175, 55, 0.12);
+    --champagne-border: rgba(212, 175, 55, 0.28);
+    --champagne-glow: rgba(212, 175, 55, 0.2);
+
+    /* Restrained Borders */
+    --border-hairline: rgba(255, 255, 255, 0.08);
+    --border-subtle: rgba(148, 163, 184, 0.16);
+    --border-strong: rgba(255, 255, 255, 0.22);
+
+    /* Threat Status Semantic Tokens */
+    --threat-critical-bg: rgba(224, 82, 82, 0.14);
+    --threat-critical-border: rgba(224, 82, 82, 0.4);
+    --threat-critical-text: #FCA5A5;
+
+    --threat-high-bg: rgba(224, 82, 82, 0.12);
+    --threat-high-border: rgba(224, 82, 82, 0.35);
+    --threat-high-text: #F87171;
+
+    --threat-medium-bg: rgba(229, 160, 56, 0.12);
+    --threat-medium-border: rgba(229, 160, 56, 0.35);
+    --threat-medium-text: #FBBF24;
+
+    --threat-info-bg: rgba(96, 165, 250, 0.12);
+    --threat-info-border: rgba(96, 165, 250, 0.3);
+    --threat-info-text: #93C5FD;
+
+    --threat-resolved-bg: rgba(52, 211, 153, 0.12);
+    --threat-resolved-border: rgba(52, 211, 153, 0.35);
+    --threat-resolved-text: #6EE7B7;
+
+    --threat-uncertain-bg: rgba(148, 163, 184, 0.12);
+    --threat-uncertain-border: rgba(148, 163, 184, 0.3);
+    --threat-uncertain-text: #CBD5E1;
+  }
+}
+
+body {
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  min-height: 100vh;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.04) 0%, transparent 60%),
+    radial-gradient(circle at 85% 85%, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Accessible focus styling */
+:focus-visible {
+  outline: 2px solid var(--champagne-primary);
+  outline-offset: 2px;
+}
+
+/* Premium Surface System */
+.premium-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: 0.75rem; /* 12px */
+  transition: border-color 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.premium-card:hover {
+  border-color: var(--border-subtle);
+  box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.5);
+}
+
+.premium-card-elevated {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-hairline);
+  border-radius: 0.75rem;
+}
+
+.glass-card {
+  background: rgba(20, 23, 29, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-hairline);
+  border-radius: 0.75rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.glass-card:hover {
+  border-color: var(--border-subtle);
+}
+
+.glass-input {
+  background: rgba(16, 19, 24, 0.9);
+  border: 1px solid var(--border-hairline);
+  color: var(--text-primary);
+  border-radius: 0.5rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.glass-input:focus {
+  outline: none;
+  border-color: var(--champagne-primary);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.18);
+}
+
+/* Subtle glow utilities */
+.glow-champagne {
+  box-shadow: 0 0 24px -4px var(--champagne-glow);
+}
+
+.glow-matrix {
+  box-shadow: 0 0 20px -3px rgba(255, 255, 255, 0.15);
+}
+
+.glow-threat {
+  box-shadow: 0 0 20px -3px rgba(224, 82, 82, 0.25);
+}
+
+/* HUD Panel */
+.hud-panel {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: 0.75rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hud-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--champagne-primary), var(--text-muted));
+  opacity: 0.8;
+}
+
+/* Cyber Dashboard & Neon Utilities */
+.glow-purple {
+  box-shadow: 0 0 25px -4px rgba(168, 85, 247, 0.45);
+}
+
+.glow-purple-strong {
+  box-shadow: 0 0 35px -2px rgba(168, 85, 247, 0.65);
+}
+
+.glow-blue {
+  box-shadow: 0 0 25px -4px rgba(96, 165, 250, 0.45);
+}
+
+.cyber-card {
+  background: linear-gradient(145deg, rgba(16, 20, 28, 0.85) 0%, rgba(11, 13, 19, 0.95) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.25rem;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cyber-card:hover {
+  border-color: rgba(168, 85, 247, 0.35);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7);
+}
+
+.cyber-card-active {
+  background: linear-gradient(145deg, rgba(28, 18, 48, 0.9) 0%, rgba(13, 15, 23, 0.95) 100%);
+  border: 1px solid rgba(168, 85, 247, 0.75);
+  border-radius: 1.25rem;
+  box-shadow: 0 0 30px -4px rgba(168, 85, 247, 0.4), inset 0 0 20px rgba(168, 85, 247, 0.12);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+@keyframes radarPing {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.9;
+  }
+  70% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+.animate-radar-ping {
+  animation: radarPing 2.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Reduced Motion Respect */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+

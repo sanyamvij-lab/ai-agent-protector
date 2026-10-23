@@ -1,0 +1,55 @@
+name: CI Security & Test Suite
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions: read-all
+
+jobs:
+  security-audit:
+    name: Dependency Audit & Secret Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4.2.0
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Dependency Audit
+        run: npm audit --audit-level=high
+
+      - name: Scan for Hardcoded Secrets
+        run: |
+          echo "Scanning codebase for potential secret key patterns..."
+          ! grep -rEi "(AIzaSy[a-zA-Z0-9_-]{33}|sk-[a-zA-Z0-9]{32,}|ghp_[a-zA-Z0-9]{36})" src/
+
+  tests:
+    name: Automated Unit & Contract Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4.2.0
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Execute Security & Link Scanner Test Suites
+        run: npm test
+
+      - name: Verify Production Build
+        run: npm run build

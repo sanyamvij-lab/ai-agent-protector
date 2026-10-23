@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Protector</title>
+  <style>
+    :root {
+      --bg: #0D0F12;
+      --card: #15181F;
+      --border: #232833;
+      --text: #FFFFFF;
+      --text-muted: #9CA3AF;
+      --emerald: #10B981;
+      --red: #EF4444;
+      --amber: #F59E0B;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      width: 360px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 16px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .brand span {
+      color: var(--emerald);
+    }
+
+    .badge-status {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--emerald);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .current-tab-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 14px;
+    }
+
+    .tab-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .tab-domain {
+      font-weight: 600;
+      font-size: 13px;
+      word-break: break-all;
+    }
+
+    .tab-status-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+      font-size: 12px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--emerald);
+    }
+
+    .status-dot.danger { background: var(--red); }
+    .status-dot.warning { background: var(--amber); }
+
+    .quick-scan {
+      margin-bottom: 14px;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 6px;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      background: #090A0D;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 10px;
+      color: #FFFFFF;
+      font-size: 12px;
+      outline: none;
+    }
+
+    input[type="text"]:focus {
+      border-color: #3B82F6;
+    }
+
+    .btn-scan {
+      background: #FFFFFF;
+      color: #000000;
+      font-weight: 600;
+      font-size: 12px;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .btn-scan:hover {
+      background: #E2E8F0;
+    }
+
+    .scan-result-card {
+      display: none;
+      background: #090A0D;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px;
+      margin-top: 8px;
+      font-size: 11px;
+      line-height: 1.4;
+    }
+
+    .scan-result-card.active {
+      display: block;
+    }
+
+    .privacy-notice {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px dashed #2A2F3D;
+      border-radius: 6px;
+      padding: 10px;
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+
+    .privacy-notice strong {
+      color: #D1D5DB;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .footer-links a:hover {
+      color: #FFFFFF;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="brand">
+      <span>🛡️</span> AI Protector
+    </div>
+    <div id="shieldBadge" class="badge-status">DEFENSE ACTIVE</div>
+  </div>
+
+  <div class="current-tab-box">
+    <div class="tab-label">
+      <span>Current Tab Domain</span>
+      <span id="tabVerifiedLabel">Inspected</span>
+    </div>
+    <div id="activeDomain" class="tab-domain">Checking...</div>
+    <div class="tab-status-row">
+      <div id="statusDot" class="status-dot"></div>
+      <span id="statusText">Verifying active navigation...</span>
+    </div>
+  </div>
+
+  <div class="quick-scan">
+    <div class="input-row">
+      <input type="text" id="quickUrlInput" placeholder="Paste link to inspect (http/https)..." />
+      <button id="quickScanBtn" class="btn-scan">Scan</button>
+    </div>
+    <div id="quickResultCard" class="scan-result-card"></div>
+  </div>
+
+  <div class="privacy-notice">
+    <strong>Privacy Guarantee:</strong> AI Protector inspects navigation URLs for phishing and malware threats. It <strong>never</strong> tracks your browsing history, records page content, or stores raw full URLs.
+  </div>
+
+  <div class="footer-links">
+    <a id="openOptionsLink">Settings & Trusted Sites</a>
+    <a id="openDashboardLink">Web Console</a>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

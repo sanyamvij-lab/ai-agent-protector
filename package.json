@@ -1,0 +1,36 @@
+{
+  "name": "ai-protector",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "test": "tsx --test src/tests/security.test.ts src/tests/phase1-url-scanner.test.ts src/tests/phase2-extension.test.ts src/tests/hackathon-privacy.test.ts src/tests/security-audit-remediation.test.ts src/tests/notification-system.test.ts src/tests/cyber-dashboard.test.ts",
+    "test:privacy": "tsx --test src/tests/hackathon-privacy.test.ts",
+    "test:e2e": "node test-e2e-api.mjs"
+  },
+  "dependencies": {
+    "lucide-react": "^1.61.0",
+    "motion": "^14.6.0",
+    "next": "16.4.2",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@tailwindcss/turbopack": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.2",
+    "tailwindcss": "^4",
+    "tsx": "^4.23.15",
+    "typescript": "^5"
+  },
+  "overrides": {
+    "braces": "^3.0.3"
+  }
+}

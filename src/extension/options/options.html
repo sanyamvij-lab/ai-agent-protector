@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Protector Settings</title>
+  <style>
+    :root {
+      --bg: #0D0F12;
+      --card: #15181F;
+      --border: #232833;
+      --text: #FFFFFF;
+      --text-muted: #9CA3AF;
+      --emerald: #10B981;
+      --red: #EF4444;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 40px 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      max-width: 640px;
+      width: 100%;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .card-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+      line-height: 1.5;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #D1D5DB;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      background: #090A0D;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 12px;
+      color: #FFFFFF;
+      font-size: 14px;
+      outline: none;
+    }
+
+    input[type="text"]:focus, input[type="password"]:focus {
+      border-color: #3B82F6;
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .btn-save {
+      background: #FFFFFF;
+      color: #000000;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .btn-save:hover {
+      background: #E2E8F0;
+    }
+
+    .trusted-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 12px;
+      margin-bottom: 16px;
+    }
+
+    .trusted-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #090A0D;
+      border: 1px solid var(--border);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: ui-monospace, monospace;
+    }
+
+    .btn-remove {
+      background: none;
+      border: none;
+      color: var(--red);
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .add-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-add {
+      background: #232833;
+      border: 1px solid #374151;
+      color: #FFFFFF;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .btn-add:hover {
+      background: #2E3544;
+    }
+
+    .privacy-box {
+      background: rgba(16, 185, 129, 0.05);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      border-radius: 8px;
+      padding: 16px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #D1D5DB;
+    }
+
+    .privacy-box strong {
+      color: var(--emerald);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🛡️ AI Protector Extension Settings</h1>
+    <div class="subtitle">Configure real-time threat interception, backend API connections, and local trusted domains.</div>
+
+    <!-- Backend API Config -->
+    <div class="card">
+      <div class="card-title">Backend API Connection</div>
+      <div class="card-desc">Specify your self-hosted or managed AI Protector API endpoint and bearer authentication token.</div>
+
+      <div class="form-group">
+        <label for="apiUrl">API URL</label>
+        <input type="text" id="apiUrl" placeholder="http://localhost:3000" />
+      </div>
+
+      <div class="form-group">
+        <label for="authToken">Authorization Token</label>
+        <input type="password" id="authToken" placeholder="test-token-user-a" />
+      </div>
+
+      <button id="saveApiBtn" class="btn-save">Save Settings</button>
+      <span id="saveStatus" style="margin-left: 12px; font-size: 13px; color: var(--emerald); display: none;">Saved!</span>
+    </div>
+
+    <!-- Interception Toggles -->
+    <div class="card">
+      <div class="card-title">Defensive Navigation Interception</div>
+      <div class="card-desc">Automatically inspect web destinations before navigation and redirect dangerous links to an interstitial security warning.</div>
+
+      <div class="toggle-row">
+        <span>Enable Automatic Link Interception</span>
+        <input type="checkbox" id="interceptionToggle" style="width: 18px; height: 18px; cursor: pointer;" />
+      </div>
+    </div>
+
+    <!-- Trusted Domains -->
+    <div class="card">
+      <div class="card-title">Locally Trusted Domains</div>
+      <div class="card-desc">Domains listed here will bypass threat scanning and never trigger security interstitial warnings.</div>
+
+      <div class="add-row">
+        <input type="text" id="newDomainInput" placeholder="example.com or sub.domain.org" />
+        <button id="addDomainBtn" class="btn-add">Add</button>
+      </div>
+
+      <div id="trustedList" class="trusted-list">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+
+    <!-- Privacy & Permission Explainer -->
+    <div class="card">
+      <div class="card-title">Permission & Privacy Explainer (§7.6)</div>
+      <div class="privacy-box">
+        <p><strong>Least-Privilege Principles:</strong> AI Protector is architected with strict data minimization:</p>
+        <ul style="margin-left: 20px; margin-top: 8px;">
+          <li><strong>webNavigation:</strong> Used exclusively to evaluate destination URLs before page rendering. Your full URLs are normalized and credentials are completely stripped prior to threat queries.</li>
+          <li><strong>storage:</strong> Retains your trusted domains and temporary 15-minute informed overrides in your browser's private local storage.</li>
+          <li><strong>contextMenus:</strong> Enables on-demand right-click threat analysis on any selected text or hyperlink without ambient monitoring.</li>
+          <li><strong>Zero Tracking:</strong> Visited URLs, web page DOM contents, and browsing history are <strong>never</strong> logged or recorded.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

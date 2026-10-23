@@ -1,0 +1,5 @@
+Contact: mailto:security@aiprotector.in
+Expires: 2027-12-31T23:59:59.000Z
+Preferred-Languages: en, hi
+Canonical: https://aiprotector.in/.well-known/security.txt
+Policy: https://aiprotector.in/security-policy

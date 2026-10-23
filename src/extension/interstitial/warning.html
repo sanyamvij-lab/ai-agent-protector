@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security Warning — AI Protector</title>
+  <style>
+    :root {
+      --bg: #0D0F12;
+      --card-bg: #14171D;
+      --card-border: #232833;
+      --text-primary: #FFFFFF;
+      --text-secondary: #9CA3AF;
+      --text-muted: #6B7280;
+      --danger: #EF4444;
+      --danger-bg: rgba(239, 68, 68, 0.12);
+      --danger-border: rgba(239, 68, 68, 0.35);
+      --warning: #F59E0B;
+      --warning-bg: rgba(245, 158, 11, 0.12);
+      --warning-border: rgba(245, 158, 11, 0.35);
+      --emerald: #10B981;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-primary);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .container {
+      max-width: 680px;
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 36px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .icon-box {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      flex-shrink: 0;
+    }
+
+    .status-malicious {
+      background: var(--danger-bg);
+      border: 1px solid var(--danger-border);
+      color: var(--danger);
+    }
+
+    .status-suspicious {
+      background: var(--warning-bg);
+      border: 1px solid var(--warning-border);
+      color: var(--warning);
+    }
+
+    .title-area h1 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 3px 8px;
+      border-radius: 6px;
+      margin-top: 4px;
+    }
+
+    .target-url-box {
+      background: #090A0D;
+      border: 1px solid #1E222B;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+      word-break: break-all;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 13px;
+      color: #E2E8F0;
+    }
+
+    .target-url-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .explanation-box {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #D1D5DB;
+      margin-bottom: 24px;
+    }
+
+    .evidence-section {
+      margin-bottom: 28px;
+    }
+
+    .section-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .evidence-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .evidence-item {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid #232833;
+      padding: 12px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+    }
+
+    .evidence-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 4px;
+      font-weight: 600;
+      color: #F3F4F6;
+    }
+
+    .evidence-source {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .btn-safety {
+      background: #EF4444;
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 14px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-safety:hover {
+      background: #DC2626;
+    }
+
+    .override-accordion {
+      margin-top: 16px;
+      border-top: 1px solid var(--card-border);
+      padding-top: 16px;
+    }
+
+    .override-toggle {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 12px;
+      cursor: pointer;
+      text-decoration: underline;
+      padding: 4px 0;
+    }
+
+    .override-toggle:hover {
+      color: var(--text-secondary);
+    }
+
+    .override-panel {
+      display: none;
+      background: #090A0D;
+      border: 1px solid #2A2F3D;
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 12px;
+    }
+
+    .override-panel.active {
+      display: block;
+    }
+
+    .override-warning {
+      color: #FCA5A5;
+      font-size: 12px;
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    .btn-override {
+      background: #232833;
+      color: #E2E8F0;
+      border: 1px solid #374151;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-right: 8px;
+    }
+
+    .btn-override:hover {
+      background: #2D3342;
+    }
+
+    .btn-trust {
+      background: none;
+      border: 1px solid #374151;
+      color: #9CA3AF;
+      padding: 8px 14px;
+      font-size: 13px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .btn-trust:hover {
+      color: #FFFFFF;
+      border-color: #4B5563;
+    }
+
+    .footer {
+      margin-top: 24px;
+      font-size: 12px;
+      color: var(--text-muted);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div id="iconBox" class="icon-box status-malicious">🛡️</div>
+      <div class="title-area">
+        <h1 id="warningTitle">Security Warning: Hazardous Link Intercepted</h1>
+        <span id="statusBadge" class="badge status-malicious">KNOWN MALICIOUS</span>
+      </div>
+    </div>
+
+    <div class="target-url-label">Intercepted Destination:</div>
+    <div id="targetUrl" class="target-url-box">Loading...</div>
+
+    <div id="explanationText" class="explanation-box">
+      This web destination has been flagged by AI Protector's security engines. Navigating to this site may expose your device to malware, credential phishing, or fraudulent content.
+    </div>
+
+    <div class="evidence-section">
+      <div class="section-title">Verified Evidence & Diagnostic Findings</div>
+      <div id="evidenceList" class="evidence-list">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+
+    <div class="actions">
+      <button id="returnSafetyBtn" class="btn-safety">
+        <span>← Return to Safety (Recommended)</span>
+      </button>
+
+      <div class="override-accordion">
+        <button id="toggleOverrideBtn" class="override-toggle">Advanced: I understand the risks and want to inspect options</button>
+        <div id="overridePanel" class="override-panel">
+          <p class="override-warning">
+            ⚠️ <strong>Warning:</strong> Proceeding to an unverified or flagged destination may allow attackers to steal login passwords, download unauthorized files, or initiate deceptive financial transfers. AI Protector never guarantees safety.
+          </p>
+          <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+            <button id="proceedOverrideBtn" class="btn-override">Proceed Anyway (Temporary 15-min Session)</button>
+            <button id="trustDomainBtn" class="btn-trust">Add Domain to Trusted Sites</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    AI Protector — Defensive Threat Scanner • Evidence-based warnings, honestly labelled.
+  </div>
+
+  <script src="warning.js"></script>
+</body>
+</html>
