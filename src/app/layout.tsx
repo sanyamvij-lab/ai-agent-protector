@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import { FirebaseAnalyticsProvider } from '@/components/providers/FirebaseAnalyticsProvider';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -34,7 +35,9 @@ export default function RootLayout({
         className="min-h-full flex flex-col bg-[#0E1013] text-[#FBF9F5] font-sans selection:bg-[#D4AF37]/25 selection:text-[#FBF9F5]"
         suppressHydrationWarning
       >
-        {children}
+        <FirebaseAnalyticsProvider>
+          {children}
+        </FirebaseAnalyticsProvider>
       </body>
     </html>
   );
