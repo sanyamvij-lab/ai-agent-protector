@@ -23,6 +23,7 @@ import {
   History,
   Bot,
   Sparkles,
+  Presentation,
 } from 'lucide-react';
 import { ProcessingMode } from '@/lib/types';
 import { useHealthCheck } from '@/hooks/useHealthCheck';
@@ -41,6 +42,7 @@ export type NavTabId =
   | 'scam_learn'
   | 'privacy_dashboard'
   | 'dashboard'
+  | 'presentation'
   | 'message'
   | 'link'
   | 'claim'
@@ -101,6 +103,7 @@ export const AppShell: React.FC<AppShellProps> = ({
       group: lang === 'hi' ? 'उन्नत फोरेंसिक टूल्स' : 'Advanced Forensics',
       items: [
         { id: 'dashboard' as NavTabId, label: 'Cyber Dashboard', icon: <LayoutDashboard className="w-4 h-4 text-purple-400" /> },
+        { id: 'presentation' as NavTabId, label: 'Interactive PPT Deck', icon: <Presentation className="w-4 h-4 text-indigo-400" /> },
         { id: 'message' as NavTabId, label: 'Message Inspector', icon: <MessageSquareWarning className="w-4 h-4" /> },
         { id: 'link' as NavTabId, label: 'URL Deep Inspector', icon: <Link2 className="w-4 h-4" /> },
         { id: 'claim' as NavTabId, label: 'Claim Verifier', icon: <Sparkles className="w-4 h-4" /> },
@@ -189,7 +192,13 @@ export const AppShell: React.FC<AppShellProps> = ({
                 return (
                   <button
                     key={item.id}
-                    onClick={() => onSelectTab(item.id)}
+                    onClick={() => {
+                      if (item.id === 'presentation') {
+                        window.open('/presentation', '_blank');
+                      } else {
+                        onSelectTab(item.id);
+                      }
+                    }}
                     className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition cursor-pointer ${
                       isActive
                         ? 'bg-[#181C24] border border-[#D4AF37]/35 text-[#FBF9F5] shadow-sm shadow-[#D4AF37]/5'
@@ -256,7 +265,11 @@ export const AppShell: React.FC<AppShellProps> = ({
                     <button
                       key={item.id}
                       onClick={() => {
-                        onSelectTab(item.id);
+                        if (item.id === 'presentation') {
+                          window.open('/presentation', '_blank');
+                        } else {
+                          onSelectTab(item.id);
+                        }
                         setMobileMenuOpen(false);
                       }}
                       className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition ${
@@ -335,6 +348,18 @@ export const AppShell: React.FC<AppShellProps> = ({
               <span>👓</span>
               <span className="hidden sm:inline">{elderMode ? 'Elder Mode: ON' : 'Elder Mode'}</span>
             </button>
+
+            {/* Interactive Pitch Deck Trigger */}
+            <a
+              href="/presentation"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-2.5 py-1 rounded-lg bg-gradient-to-r from-purple-600/25 to-indigo-600/25 border border-purple-500/40 hover:border-purple-400 text-xs font-bold text-purple-200 transition flex items-center gap-1.5 shadow-sm"
+              title="Open Interactive Tech Deck & Pitch Presentation"
+            >
+              <span className="text-purple-400">📽️</span>
+              <span className="hidden sm:inline">Interactive Tech Deck</span>
+            </a>
 
             {/* What Happens To Your Input Modal Trigger */}
             <button

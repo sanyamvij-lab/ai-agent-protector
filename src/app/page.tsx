@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { Download } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import { ProcessingMode } from '@/lib/types';
 import { AppShell, NavTabId } from '@/components/layout/AppShell';
@@ -349,6 +351,34 @@ function MainApp() {
       )}
       {activeTab === 'health' && (
         <SystemHealthTab />
+      )}
+      {activeTab === 'presentation' && (
+        <div className="p-8 max-w-4xl mx-auto text-center space-y-6 my-12 bg-[#10121E] border border-purple-500/30 rounded-2xl">
+          <div className="w-16 h-16 rounded-2xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center mx-auto text-2xl">
+            📽️
+          </div>
+          <h2 className="text-2xl font-bold text-white">AI Protector Executive Pitch Deck</h2>
+          <p className="text-sm text-neutral-400 max-w-lg mx-auto">
+            12-slide comprehensive architecture and technology pitch deck detailing our zero-trust pipeline, anti-SSRF protections, DPDP Act 2023 compliance, and multi-engine threat consensus.
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-4">
+            <Link
+              href="/presentation"
+              className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-sm shadow-lg shadow-purple-900/30 transition flex items-center gap-2"
+            >
+              <span>Launch Interactive Presentation</span>
+              <span>→</span>
+            </Link>
+            <a
+              href="/AI_Protector_Executive_Tech_Deck.pptx"
+              download="AI_Protector_Executive_Tech_Deck.pptx"
+              className="px-5 py-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-white/30 text-white font-bold text-sm transition flex items-center gap-2"
+            >
+              <Download className="w-4 h-4 text-purple-400" />
+              <span>Download .pptx File (338 KB)</span>
+            </a>
+          </div>
+        </div>
       )}
 
       {/* What Happens to Your Input Modal */}
